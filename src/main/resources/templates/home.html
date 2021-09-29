@@ -8,7 +8,7 @@
         <h4>Valsts no kuras atgriezies</h4>
         <div class="form-group ">
             <div class="d-flex justify-content-center">
-                <select class="form-select w-25" id="country" name="country">
+                <select class="form-select w-50" id="country" name="country">
                     <div th:each="country: ${countryList}">
                         <div th:switch="${country}">
                             <option th:case="'Citas sarakstos neminētas visas pasaules valstis'"
