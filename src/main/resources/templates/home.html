@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="fragments/head ::head"/>
+<th:block th:insert="fragments/navbar :: header"/>
+<body>
+<div class="container" style="margin-top: 10px;text-align: center;">
+    <form role="form" th:action="@{/showResults}" th:method="post">
+        <h4>Valsts no kuras atgriezies</h4>
+        <div class="form-group ">
+            <div class="d-flex justify-content-center">
+                <select class="form-select w-25" id="country" name="country">
+                    <div th:each="country: ${countryList}">
+                        <div th:switch="${country}">
+                            <option th:case="'Citas sarakstos neminētas visas pasaules valstis'"
+                                    th:text="${'Citas valstis'}"
+                                    th:value="${country}"></option>
+                            <option th:case="'Honkongas īpašās pārvaldes apgabals'"
+                                    th:text="${'Honkonga'}"
+                                    th:value="${country}"></option>
+                            <option th:case="'Makao īpašās pārvaldes apgabals'"
+                                    th:text="${'Makao'}"
+                                    th:value="${country}"></option>
+                            <option th:case="*"
+                                    th:text="${country}"
+                                    th:value="${country}"></option>
+                        </div>
+                    </div>
+                </select>
+            </div>
+        </div>
+        <h4 style="margin-top: 10px;">Ir vakcinācijas vai pārslimošanas sertififāts</h4>
+        <div class="form-group">
+            <input class="form-check-input" type="checkbox" value="" id="hasCertificate" name="hasCertificate">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-block" type="submit" style="margin-top: 10px;">Uzzināt informāciju
+            </button>
+        </div>
+    </form>
+</div>
+<footer class="footer fixed-bottom">
+    <p style="font-family: Poppins, sans-serif;font-size: 8px;color: rgb(153,165,177);text-align: center;margin-top: 16px">
+        &copy Uldis Jansons, uj18005</p>
+</footer>
+</body>
+</html>
