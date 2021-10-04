@@ -16,7 +16,8 @@ import java.util.*;
 public class CountryService {
 
     private String date = "2021-09-24";
-    private final String JSON_URL = "https://data.gov.lv/dati/lv/api/3/action/datastore_search?q="+date+"&resource_id=8ea0ee31-1bea-4336-bbe4-2e66ccdadd1b";
+    private String testDate = "2021-10-08";
+    private String JSON_URL = "https://data.gov.lv/dati/lv/api/3/action/datastore_search?q=" + date + "&resource_id=8ea0ee31-1bea-4336-bbe4-2e66ccdadd1b";
     String jsonString = "";
     RestTemplate restTemplate = new RestTemplate();
 
@@ -26,15 +27,16 @@ public class CountryService {
     public ArrayList<String> getCountries() throws JsonProcessingException {
         List<Record> records = getRecords();
         ArrayList<String> countries = new ArrayList<>();
-        for(Record record:records){
+        for (Record record : records) {
             countries.add(record.getValsts());
         }
         return countries;
     }
 
     public List<Record> getRecords() throws JsonProcessingException {
-        if(LocalDate.now().equals(LocalDate.parse(date).plusDays(7))){
-            date = LocalDate.now().toString();
+        if (LocalDate.parse(testDate).isAfter(LocalDate.parse(date).plusDays(7))) {
+            date = LocalDate.parse(date).plusDays(7).toString();
+            updateDate();
         }
         jsonString = restTemplate.getForObject(JSON_URL, String.class);
         JSONObject jo = new JSONObject(jsonString);
@@ -42,6 +44,11 @@ public class CountryService {
 
         final ObjectMapper objectMapper = new ObjectMapper();
 
-        return objectMapper.readValue(ja.toString(), new TypeReference<List<Record>>() {});
+        return objectMapper.readValue(ja.toString(), new TypeReference<List<Record>>() {
+        });
+    }
+
+    public void updateDate(){
+        JSON_URL = "https://data.gov.lv/dati/lv/api/3/action/datastore_search?q=" + date + "&resource_id=8ea0ee31-1bea-4336-bbe4-2e66ccdadd1b";
     }
 }
