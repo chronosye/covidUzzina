@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
 public class CountryService {
 
-    private String date = "2021-09-24";
-    private String testDate = "2021-10-08";
+    private String date = "2021-10-08";
     private String JSON_URL = "https://data.gov.lv/dati/lv/api/3/action/datastore_search?q=" + date + "&resource_id=8ea0ee31-1bea-4336-bbe4-2e66ccdadd1b";
     String jsonString = "";
     RestTemplate restTemplate = new RestTemplate();
@@ -34,7 +34,7 @@ public class CountryService {
     }
 
     public List<Record> getRecords() throws JsonProcessingException {
-        if (LocalDate.parse(testDate).isAfter(LocalDate.parse(date).plusDays(7))) {
+        if (LocalDate.now().isAfter(LocalDate.parse(date).plusDays(7))) {
             date = LocalDate.parse(date).plusDays(7).toString();
             updateDate();
         }
